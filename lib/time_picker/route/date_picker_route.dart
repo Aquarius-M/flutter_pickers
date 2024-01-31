@@ -82,22 +82,18 @@ class DatePickerRoute<T> extends PopupRoute<T> {
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     Widget bottomSheet = MediaQuery.removePadding(
-        context: context,
-        removeTop: true,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            _PickerContentView(
-              mode: mode,
-              initData: initDate,
-              maxDate: maxDate,
-              minDate: minDate,
-              pickerStyle: pickerStyle!,
-              route: this,
-            ),
-            bottomExt ?? SizedBox()
-          ],
-        ));
+      context: context,
+      removeTop: true,
+      child: _PickerContentView(
+        mode: mode,
+        initData: initDate,
+        maxDate: maxDate,
+        minDate: minDate,
+        pickerStyle: pickerStyle!,
+        route: this,
+        bottomExt: bottomExt,
+      ),
+    );
     if (theme != null) {
       bottomSheet = Theme(data: theme!, child: bottomSheet);
     }
@@ -115,6 +111,7 @@ class _PickerContentView extends StatefulWidget {
     required this.maxDate,
     required this.minDate,
     required this.route,
+    required this.bottomExt,
   }) : super(key: key);
 
   final DateMode? mode;
@@ -125,6 +122,7 @@ class _PickerContentView extends StatefulWidget {
   // 限制时间
   late final PDuration maxDate;
   late final PDuration minDate;
+  final Widget? bottomExt;
 
   @override
   State<StatefulWidget> createState() => _PickerState(
@@ -738,6 +736,9 @@ class _PickerState extends State<_PickerContentView> {
       viewList.add(_pickerStyle.menu!);
     }
     viewList.add(itemView);
+    if (widget.bottomExt != null) {
+      viewList.add(widget.bottomExt ?? SizedBox());
+    }
 
     return Column(children: viewList);
   }
