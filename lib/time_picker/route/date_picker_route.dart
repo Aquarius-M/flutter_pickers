@@ -28,7 +28,6 @@ class DatePickerRoute<T> extends PopupRoute<T> {
     this.onCancel,
     this.theme,
     this.barrierLabel,
-    this.bottomExt,
     RouteSettings? settings,
   }) : super(settings: settings);
 
@@ -42,7 +41,6 @@ class DatePickerRoute<T> extends PopupRoute<T> {
   final DateCallback? onConfirm;
   final Function(bool isCancel)? onCancel;
   final PickerStyle? pickerStyle;
-  final Widget? bottomExt;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -91,7 +89,6 @@ class DatePickerRoute<T> extends PopupRoute<T> {
         minDate: minDate,
         pickerStyle: pickerStyle!,
         route: this,
-        bottomExt: bottomExt,
       ),
     );
     if (theme != null) {
@@ -111,7 +108,6 @@ class _PickerContentView extends StatefulWidget {
     required this.maxDate,
     required this.minDate,
     required this.route,
-    required this.bottomExt,
   }) : super(key: key);
 
   final DateMode? mode;
@@ -122,7 +118,6 @@ class _PickerContentView extends StatefulWidget {
   // 限制时间
   late final PDuration maxDate;
   late final PDuration minDate;
-  final Widget? bottomExt;
 
   @override
   State<StatefulWidget> createState() => _PickerState(
@@ -736,8 +731,9 @@ class _PickerState extends State<_PickerContentView> {
       viewList.add(_pickerStyle.menu!);
     }
     viewList.add(itemView);
-    if (widget.bottomExt != null) {
-      viewList.add(widget.bottomExt ?? SizedBox());
+
+    if (_pickerStyle.bottomExt != null) {
+      viewList.add(_pickerStyle.bottomExt!);
     }
 
     return Column(children: viewList);

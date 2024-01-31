@@ -240,7 +240,6 @@ class Pickers {
         theme: Theme.of(context),
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
-        bottomExt: bottomExt,
       ),
     );
   }
