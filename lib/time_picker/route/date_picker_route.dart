@@ -82,18 +82,22 @@ class DatePickerRoute<T> extends PopupRoute<T> {
   Widget buildPage(BuildContext context, Animation<double> animation,
       Animation<double> secondaryAnimation) {
     Widget bottomSheet = MediaQuery.removePadding(
-      context: context,
-      removeTop: true,
-      child: _PickerContentView(
-        mode: mode,
-        initData: initDate,
-        maxDate: maxDate,
-        minDate: minDate,
-        pickerStyle: pickerStyle!,
-        route: this,
-        bottomExt: bottomExt ?? SizedBox(),
-      ),
-    );
+        context: context,
+        removeTop: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _PickerContentView(
+              mode: mode,
+              initData: initDate,
+              maxDate: maxDate,
+              minDate: minDate,
+              pickerStyle: pickerStyle!,
+              route: this,
+            ),
+            bottomExt ?? SizedBox()
+          ],
+        ));
     if (theme != null) {
       bottomSheet = Theme(data: theme!, child: bottomSheet);
     }
@@ -111,7 +115,6 @@ class _PickerContentView extends StatefulWidget {
     required this.maxDate,
     required this.minDate,
     required this.route,
-    required this.bottomExt,
   }) : super(key: key);
 
   final DateMode? mode;
@@ -122,7 +125,6 @@ class _PickerContentView extends StatefulWidget {
   // 限制时间
   late final PDuration maxDate;
   late final PDuration minDate;
-  late final Widget bottomExt;
 
   @override
   State<StatefulWidget> createState() => _PickerState(
@@ -364,22 +366,19 @@ class _PickerState extends State<_PickerContentView> {
         animation: widget.route.animation!,
         builder: (BuildContext context, Widget? child) {
           return ClipRect(
-              child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomSingleChildLayout(
-                delegate: _BottomPickerLayout(
-                    widget.route.animation!.value, _pickerStyle),
-                child: GestureDetector(
-                  child: Material(
-                    color: Colors.transparent,
-                    child: _renderPickerView(),
-                  ),
+            child: CustomSingleChildLayout(
+              delegate: _BottomPickerLayout(
+                widget.route.animation!.value,
+                _pickerStyle,
+              ),
+              child: GestureDetector(
+                child: Material(
+                  color: Colors.transparent,
+                  child: _renderPickerView(),
                 ),
               ),
-              widget.bottomExt,
-            ],
-          ));
+            ),
+          );
         },
       ),
     );
