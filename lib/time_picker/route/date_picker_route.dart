@@ -843,6 +843,8 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
       maxHeight += pickerStyle.menuHeight;
     }
 
+    maxHeight += pickerStyle.bottomExtHeight;
+
     return BoxConstraints(
         minWidth: constraints.maxWidth,
         maxWidth: constraints.maxWidth,

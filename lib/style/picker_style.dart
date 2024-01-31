@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 /// [pickerTitleHeight]  选择器上面 title 确认、取消的整体高度  固定高度：44.0
 /// [pickerItemHeight]  选择器每个被选中item的高度：40.0
 /// [menuHeight]  头部和选择器之间的菜单高度  固定高度：36.0
+/// [bottomExtHeight]  头部和选择器之间的菜单高度  固定高度：36.0
 /// [cancelButton]  头部的取消按钮
 /// [commitButton]  头部的确认按钮
 /// [textColor]  选择器的文字颜色 默认黑色
@@ -23,6 +24,7 @@ class PickerStyle {
   double? _pickerTitleHeight;
   double? _pickerItemHeight;
   double? _menuHeight;
+  double? _bottomExtHeight;
 
   Widget? _cancelButton;
   Widget? _commitButton;
@@ -40,6 +42,7 @@ class PickerStyle {
     double? pickerTitleHeight,
     double? pickerItemHeight,
     double? menuHeight,
+    double? bottomExtHeight,
     Widget? cancelButton,
     Widget? commitButton,
     Widget? title,
@@ -56,6 +59,7 @@ class PickerStyle {
     this._pickerTitleHeight = pickerTitleHeight;
     this._pickerItemHeight = pickerItemHeight;
     this._menuHeight = menuHeight;
+    this._bottomExtHeight = bottomExtHeight;
 
     this._cancelButton = cancelButton;
     this._commitButton = commitButton;
@@ -72,6 +76,10 @@ class PickerStyle {
 
   set menuHeight(double value) {
     _menuHeight = value;
+  }
+
+  set bottomExtHeight(double value) {
+    _bottomExtHeight = value;
   }
 
   set menu(Widget? value) {
@@ -133,6 +141,8 @@ class PickerStyle {
   Widget? get menu => this._menu;
 
   double get menuHeight => this._menuHeight ?? 36.0;
+
+  double get bottomExtHeight => this._bottomExtHeight ?? 0;
 
   double get pickerHeight => this._pickerHeight ?? 220.0;
 
