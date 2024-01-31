@@ -64,7 +64,6 @@ class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
           : Theme.of(context).primaryColor,
       // : Provider.of<ThemeModel>(context, listen: true).themeData.primaryColor,
       elevation: elevation,
-      brightness: brightness,
       leading:
           leadingW ?? (automaticallyImplyLeading ? leading(context) : null),
       automaticallyImplyLeading: automaticallyImplyLeading,

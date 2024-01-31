@@ -140,10 +140,10 @@ class Pickers {
   /// [addAllItem] 市、区是否添加 '全部' 选项     默认：true
   static void showAddressPicker(BuildContext context,
       {PickerStyle? pickerStyle,
-      String initProvince: '',
-      String initCity: '',
+      String initProvince = '',
+      String initCity = '',
       String? initTown,
-      bool addAllItem: true,
+      bool addAllItem = true,
       AddressCallback? onChanged,
       AddressCallback? onConfirm,
       Function(bool isCancel)? onCancel,
@@ -179,8 +179,9 @@ class Pickers {
   ///     tip: 当只有单列数据，该限制不产生关联 只针对单列item限制，比如 maxDate>day = 3  minDate>day = 10,那么所有的月份都只显示3-10之间
   /// [minDate] : 最小时间 用法同上
   /// [mode] : 时间选择器所显示样式  16 种时间样式 默认：DateMode.YMD
+  /// [bottomExt] : 时间选择器底部拓展
   static void showDatePicker(BuildContext context,
-      {DateMode mode: DateMode.YMD,
+      {DateMode mode = DateMode.YMD,
       PDuration? selectDate,
       PDuration? maxDate,
       PDuration? minDate,
@@ -189,7 +190,8 @@ class Pickers {
       DateCallback? onChanged,
       DateCallback? onConfirm,
       Function(bool isCancel)? onCancel,
-      bool overlapTabBar = false}) {
+      bool overlapTabBar = false,
+      Widget? bottomExt}) {
     if (pickerStyle == null) {
       pickerStyle = DefaultPickerStyle();
     }
@@ -223,19 +225,23 @@ class Pickers {
       }
     }
 
-    Navigator.of(context, rootNavigator: overlapTabBar).push(DatePickerRoute(
-      mode: mode,
-      initDate: selectDate,
-      maxDate: maxDate,
-      minDate: minDate,
-      suffix: suffix,
-      pickerStyle: pickerStyle,
-      onChanged: onChanged,
-      onConfirm: onConfirm,
-      onCancel: onCancel,
-      // theme: Theme.of(context, shadowThemeOnly: true),
-      theme: Theme.of(context),
-      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
-    ));
+    Navigator.of(context, rootNavigator: overlapTabBar).push(
+      DatePickerRoute(
+        mode: mode,
+        initDate: selectDate,
+        maxDate: maxDate,
+        minDate: minDate,
+        suffix: suffix,
+        pickerStyle: pickerStyle,
+        onChanged: onChanged,
+        onConfirm: onConfirm,
+        onCancel: onCancel,
+        // theme: Theme.of(context, shadowThemeOnly: true),
+        theme: Theme.of(context),
+        barrierLabel:
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        bottomExt: bottomExt,
+      ),
+    );
   }
 }

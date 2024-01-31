@@ -28,6 +28,7 @@ class DatePickerRoute<T> extends PopupRoute<T> {
     this.onCancel,
     this.theme,
     this.barrierLabel,
+    this.bottomExt,
     RouteSettings? settings,
   }) : super(settings: settings);
 
@@ -41,6 +42,7 @@ class DatePickerRoute<T> extends PopupRoute<T> {
   final DateCallback? onConfirm;
   final Function(bool isCancel)? onCancel;
   final PickerStyle? pickerStyle;
+  final Widget? bottomExt;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -89,6 +91,7 @@ class DatePickerRoute<T> extends PopupRoute<T> {
         minDate: minDate,
         pickerStyle: pickerStyle!,
         route: this,
+        bottomExt: bottomExt ?? SizedBox(),
       ),
     );
     if (theme != null) {
@@ -108,6 +111,7 @@ class _PickerContentView extends StatefulWidget {
     required this.maxDate,
     required this.minDate,
     required this.route,
+    required this.bottomExt,
   }) : super(key: key);
 
   final DateMode? mode;
@@ -118,6 +122,7 @@ class _PickerContentView extends StatefulWidget {
   // 限制时间
   late final PDuration maxDate;
   late final PDuration minDate;
+  late final Widget bottomExt;
 
   @override
   State<StatefulWidget> createState() => _PickerState(
@@ -359,17 +364,22 @@ class _PickerState extends State<_PickerContentView> {
         animation: widget.route.animation!,
         builder: (BuildContext context, Widget? child) {
           return ClipRect(
-            child: CustomSingleChildLayout(
-              delegate: _BottomPickerLayout(
-                  widget.route.animation!.value, _pickerStyle),
-              child: GestureDetector(
-                child: Material(
-                  color: Colors.transparent,
-                  child: _renderPickerView(),
+              child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CustomSingleChildLayout(
+                delegate: _BottomPickerLayout(
+                    widget.route.animation!.value, _pickerStyle),
+                child: GestureDetector(
+                  child: Material(
+                    color: Colors.transparent,
+                    child: _renderPickerView(),
+                  ),
                 ),
               ),
-            ),
-          );
+              widget.bottomExt,
+            ],
+          ));
         },
       ),
     );
